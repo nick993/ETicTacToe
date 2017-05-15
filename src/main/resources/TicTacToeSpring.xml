@@ -1,0 +1,35 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+
+	<bean id="AssemblyUnit" class="nick.game.ettt.AssemblyUnit" autowire="constructor" />
+
+
+	<bean id="UIHelper" class="nick.game.ettt.ui.impl.UserInterfaceHelper">
+		<property name="userInterface" ref="MaterialUI" />  
+	</bean>
+
+	<bean id="InpHelper" class="nick.game.ettt.io.impl.InputHelper">
+		<property name="input" ref="MachineInp" />
+	</bean>
+	
+	<bean id="ProcessingUnit" class="nick.game.ettt.core.ProcessingUnit" autowire="byType" >
+		<constructor-arg ref="MaterialUI" />
+	</bean>
+	
+	<bean id="GroovyConnector" class ="nick.game.ettt.GroovyConnector" />
+
+	<bean id="SimpleUI" class="nick.game.ettt.ui.impl.SimpleUserInterface" />
+	<bean id="MaterialUI" class="nick.game.ettt.ui.impl.MaterialInterface" >
+		<constructor-arg>
+			<value>9</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="MachineInp" class="nick.game.ettt.io.impl.MachineInput" />
+	<bean id="ScriptInp" class="nick.game.ettt.io.impl.ScriptInput" />
+	<bean id="UserInp" class="nick.game.ettt.io.impl.UserInput" />
+	
+</beans>
