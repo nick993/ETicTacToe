@@ -22,6 +22,7 @@
 	
 	<bean id="SimpleGameValidator" class="nick.game.ettt.core.SimpleGameValidator" >
 		<property name="blockMap" value="#{MaterialUI.blockMap }" />
+		<property name="blockSize" value="#{MaterialUI.blockSize }" />
 	</bean>
 	
 	
@@ -30,7 +31,7 @@
 	<bean id="SimpleUI" class="nick.game.ettt.ui.impl.SimpleUserInterface" />
 	<bean id="MaterialUI" class="nick.game.ettt.ui.impl.MaterialInterface" >
 		<constructor-arg>
-			<value>9</value>
+			<value>3</value>
 		</constructor-arg>
 	</bean>
 	

@@ -19,20 +19,19 @@ public class AssemblyUnit {
 
 	}
 
-	
 	public int doMachineActions() throws InterruptedException {
-		if(gameOver) 
+		if (gameOver)
 			return 1;
-		int result =  processingUnit.machineInteraction();
-		gameOver = (result == 1)?true:false;
+		int result = processingUnit.machineInteraction();
+		gameOver = (result == 1) ? true : false;
 		return result;
 	}
-	
+
 	public int doScriptActions() throws InterruptedException {
-		if(gameOver)
+		if (gameOver)
 			return 1;
 		int result = processingUnit.runScript();
-		gameOver = (result == 1)?true:false;
+		gameOver = (result == 1) ? true : false;
 		return result;
 	}
 
