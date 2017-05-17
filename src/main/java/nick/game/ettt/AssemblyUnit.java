@@ -1,5 +1,7 @@
 package nick.game.ettt;
 
+import java.util.List;
+
 import nick.game.ettt.core.ProcessingUnit;
 import nick.game.ettt.io.impl.InputHelper;
 import nick.game.ettt.ui.Block;
@@ -50,6 +52,14 @@ public class AssemblyUnit {
 	public void clearBoard() {
 		userInterface.clear();
 		gameOver = false;
+	}
+
+	public void markInvalidBlocks() {
+		List<Integer> invalidBlocks = processingUnit.getValidator().getInvalidBlocks();
+		if(invalidBlocks != null) {
+			userInterface.markInvalidBlocks(invalidBlocks);
+		}
+		
 	}
 
 }

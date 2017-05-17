@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -156,6 +157,13 @@ public class MaterialInterface extends IUserInterface {
 	@Override
 	public Map getBlockMap() {
 		return blockMap;
+	}
+
+	@Override
+	public void markInvalidBlocks(List<Integer> invalidBlocks) {
+		invalidBlocks.forEach(e -> {
+			buttons[getX(e)][getY(e)].setEnabled(false);
+		});
 	}
 
 }

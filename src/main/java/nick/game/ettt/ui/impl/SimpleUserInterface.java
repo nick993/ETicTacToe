@@ -1,5 +1,6 @@
 package nick.game.ettt.ui.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import nick.game.ettt.ui.Block;
@@ -37,6 +38,12 @@ public class SimpleUserInterface extends IUserInterface {
 	@Override
 	public Map getBlockMap() {
 		return null;
+	}
+
+	@Override
+	public void markInvalidBlocks(List<Integer> invalidBlocks) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

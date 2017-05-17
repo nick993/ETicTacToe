@@ -1,5 +1,6 @@
 package nick.game.ettt.ui;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JPanel;
@@ -11,5 +12,6 @@ public abstract class IUserInterface extends JPanel{
 	abstract public Map getBlockMap();
 	abstract public boolean isGameFininshed();
 	abstract public void clear();
+	abstract public void markInvalidBlocks(List<Integer> invalidBlocks);
 	
 }

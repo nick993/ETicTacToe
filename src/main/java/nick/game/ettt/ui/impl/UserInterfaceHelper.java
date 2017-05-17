@@ -1,6 +1,11 @@
 package nick.game.ettt.ui.impl;
 
 
+import java.util.List;
+
+
+import org.codehaus.groovy.ast.stmt.BlockStatement;
+
 import nick.game.ettt.ui.Block;
 import nick.game.ettt.ui.IUserInterface;
 
@@ -30,6 +35,10 @@ public class UserInterfaceHelper {
 	
 	public void clear() {
 		userInterface.clear();
+	}
+
+	public void markInvalidBlocks(List<Integer> invalidBlocks) {
+		userInterface.markInvalidBlocks(invalidBlocks);
 	}
 	
 

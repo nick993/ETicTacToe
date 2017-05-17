@@ -34,6 +34,9 @@ class PlayerThread extends Thread {
 
 				try {
 					stop = assemblyUnit.doScriptActions();
+					if(stop == 1) {
+						assemblyUnit.markInvalidBlocks();
+					}
 					System.out.println("Script Player " + playerName + " Action");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -77,7 +80,7 @@ public class PlayerThreadManager {
 	private static AssemblyUnit assemblyUnit;
 
 	static {
-		semaphore = new Semaphore(1, true);
+		semaphore = new Semaphore(0, true);
 		assemblyUnit = TicTacToe.getInstance().getAssemblyUnit();
 	}
 
@@ -95,6 +98,11 @@ public class PlayerThreadManager {
 		if (player1 == null || player2 == null) {
 			System.out.println("One player is not initialized");
 		} else {
+			try {
+				semaphore.release();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			player1.start();
 			player2.start();
 		}

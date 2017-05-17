@@ -1,8 +1,9 @@
 package nick.game.ettt.core;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-import org.codehaus.groovy.ast.stmt.ContinueStatement;
 
 import nick.game.ettt.ui.Block;
 
@@ -10,6 +11,7 @@ public class SimpleGameValidator implements IValidator {
 
 	private Map<Integer, Block> blockMap;
 	private int blockSize;
+	private List<Integer> invalidBlocks;
 
 	@Override
 	public boolean isGameOver() {
@@ -50,8 +52,12 @@ public class SimpleGameValidator implements IValidator {
 					break;
 				}
 			}
-			if(flag) 
+			if(flag) {
+				setInvalidBlocks(new ArrayList<Integer>());
+				for(int i=0;i<blockSize; i++) 
+					getInvalidBlocks().add(getIndex(i, i));
 				return diagonal1;
+			}
 			
 		}
 		Block diagonal2 = blockMap.get(getIndex(blockSize - 1, 0));
@@ -64,8 +70,12 @@ public class SimpleGameValidator implements IValidator {
 					break;
 				}
 			}
-			if(flag) 
+			if(flag) {
+				setInvalidBlocks(new ArrayList<Integer>());
+				for(int i=0;i<blockSize; i++) 
+					getInvalidBlocks().add(getIndex(blockSize - 1 - i, i));
 				return diagonal2;
+			}
 			
 		}
 
@@ -89,6 +99,10 @@ public class SimpleGameValidator implements IValidator {
 			}
 			
 			if(flag) {
+				setInvalidBlocks(new ArrayList<Integer>());
+				for(int j =0; j<blockSize; j++) {
+					getInvalidBlocks().add(getIndex(i, j));
+				}
 				return blockMap.get(getIndex(i, 0));
 			}
 			
@@ -112,6 +126,10 @@ public class SimpleGameValidator implements IValidator {
 			}
 			
 			if(flag) {
+				setInvalidBlocks(new ArrayList<Integer>());
+				for(int j =0; j<blockSize; j++) {
+					getInvalidBlocks().add(getIndex(j, i));
+				}
 				return blockMap.get(getIndex(0, i));
 			}
 			
@@ -134,6 +152,16 @@ public class SimpleGameValidator implements IValidator {
 
 	public void setBlockSize(int blockSize) {
 		this.blockSize = blockSize;
+	}
+
+	@Override
+	public List<Integer> getInvalidBlocks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setInvalidBlocks(List<Integer> invalidBlocks) {
+		this.invalidBlocks = invalidBlocks;
 	}
 
 }
