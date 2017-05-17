@@ -9,6 +9,7 @@ public class ProcessingUnit {
 	private String script;
 	private GroovyConnector groovyConnector;
 	private IUserInterface userInterface;
+	private IValidator validator;
 
 	public ProcessingUnit(IUserInterface userInterface) {
 		this.userInterface = userInterface;
@@ -22,7 +23,27 @@ public class ProcessingUnit {
 		this.script = script;
 	}
 
-	public void runScript() {
+	public int machineInteraction() {
+		int blockSize = userInterface.getBlockSize();
+
+		while (true) {
+			int randX = (int) (Math.random() * blockSize);
+			int randY = (int) (Math.random() * blockSize);
+			
+			Block selectedBlock = userInterface.getConfiguration(randX, randY);
+			if(selectedBlock == Block.EMPTY) {
+				userInterface.setBlock(randX, randY, Block.PLAYER2);
+				break;
+			}
+		}
+
+		if (validator.isGameOver())
+			return 1;
+
+		return 0;
+	}
+
+	public int runScript() {
 		Binding binding = new Binding();
 		int blockSize = userInterface.getBlockSize();
 		int[][] blockArray = new int[blockSize][blockSize];
@@ -57,6 +78,11 @@ public class ProcessingUnit {
 		groovyConnector.evaluate(script);
 		System.out.println("Var x : " + p1.x);
 		userInterface.setBlock(p1.x, p1.y, Block.PLAYER1);
+		if (validator.isGameOver()) {
+			return 1;
+		}
+
+		return 0;
 	}
 
 	class Pair {
@@ -70,6 +96,14 @@ public class ProcessingUnit {
 
 	public void setGroovyConnector(GroovyConnector groovyConnector) {
 		this.groovyConnector = groovyConnector;
+	}
+
+	public IValidator getValidator() {
+		return validator;
+	}
+
+	public void setValidator(IValidator validator) {
+		this.validator = validator;
 	}
 
 }

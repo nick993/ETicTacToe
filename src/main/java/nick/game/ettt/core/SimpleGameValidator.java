@@ -1,12 +1,17 @@
 package nick.game.ettt.core;
 
+import java.util.Map;
+
 import nick.game.ettt.ui.Block;
 
-public class SimpleGameValidator implements IValidator{
+public class SimpleGameValidator implements IValidator {
+	
+	private Map<Integer, Block> blockMap;
+	
 
 	@Override
 	public boolean isGameOver() {
-		// TODO Auto-generated method stub
+		if(blockMap.values().stream().filter(b -> (b != Block.EMPTY)).count() == 5)	return true;
 		return false;
 	}
 
@@ -14,6 +19,14 @@ public class SimpleGameValidator implements IValidator{
 	public Block whoWon() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Map<Integer, Block> getBlockMap() {
+		return blockMap;
+	}
+
+	public void setBlockMap(Map<Integer, Block> blockMap) {
+		this.blockMap = blockMap;
 	}
 
 }

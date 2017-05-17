@@ -30,6 +30,8 @@ public class TicTacToe extends JFrame {
 
 	private AssemblyUnit assemblyUnit;
 
+	private static TicTacToe INSTANCE;
+	
 	public TicTacToe() {
 		init();
 	}
@@ -38,7 +40,9 @@ public class TicTacToe extends JFrame {
 			InterruptedException {
 		
 		SwingUtilities.invokeLater(() -> {
-			new TicTacToe();
+			if(INSTANCE == null) {
+				INSTANCE = new TicTacToe();
+			}
 		});
 	}
 
@@ -63,7 +67,9 @@ public class TicTacToe extends JFrame {
 		JMenu otherMenu = new JMenu("Other");
 		JMenuItem playMenu = new JMenuItem("Play");
 		playMenu.addActionListener((e) -> {
-			assemblyUnit.clearBoard();
+			PlayerThreadManager.addPlayer1("Script Player", PlayerType.SCRIPT);
+			PlayerThreadManager.addPlayer2("Machine Player", PlayerType.MACHINE);
+			getAssemblyUnit().clearBoard();
 			this.doActions();
 		});
 		otherMenu.add(playMenu);
@@ -81,7 +87,7 @@ public class TicTacToe extends JFrame {
 		
 		JMenuItem clearMenu = new JMenuItem("Clear");
 		clearMenu.addActionListener((e) -> {
-			assemblyUnit.clearBoard();
+			getAssemblyUnit().clearBoard();
 		});
 		otherMenu.add(clearMenu);
 		
@@ -94,13 +100,13 @@ public class TicTacToe extends JFrame {
 	private void initData() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				new String[] { "TicTacToeSpring.xml" });
-		assemblyUnit = (AssemblyUnit) context.getBean("AssemblyUnit");
+		setAssemblyUnit((AssemblyUnit) context.getBean("AssemblyUnit"));
 
 	}
 
 	public void doActions() {
 		try {
-			assemblyUnit.doActions();
+			PlayerThreadManager.runGame();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -109,13 +115,26 @@ public class TicTacToe extends JFrame {
 	private void initFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(400, 400));
-		add(assemblyUnit.getUserInterface().getUserInterface(), BorderLayout.CENTER);
+		add(getAssemblyUnit().getUserInterface().getUserInterface(), BorderLayout.CENTER);
 		setVisible(true);
 		
 		
 	}
 	
 	
+	public static TicTacToe getInstance() {
+		return INSTANCE;
+	}
+	
+	public AssemblyUnit getAssemblyUnit() {
+		return assemblyUnit;
+	}
+
+	public void setAssemblyUnit(AssemblyUnit assemblyUnit) {
+		this.assemblyUnit = assemblyUnit;
+	}
+
+
 	class InputDialog extends JDialog {
 		JTextArea textArea;
 		JPanel mainPanel;
@@ -126,7 +145,7 @@ public class TicTacToe extends JFrame {
 		
 		public InputDialog() {
 			textArea = new JTextArea();
-			Optional.ofNullable(assemblyUnit.getScript()).ifPresent(textArea::setText);
+			Optional.ofNullable(getAssemblyUnit().getScript()).ifPresent(textArea::setText);
 			
 			mainPanel = new JPanel(new BorderLayout());
 			
@@ -139,7 +158,7 @@ public class TicTacToe extends JFrame {
 			okButton = new JButton("Ok");
 			okButton.addActionListener((e) -> {
 				script = textArea.getText();
-				assemblyUnit.setScript(script);
+				getAssemblyUnit().setScript(script);
 				dispose();
 			});
 			

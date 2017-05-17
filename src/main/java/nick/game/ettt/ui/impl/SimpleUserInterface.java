@@ -1,5 +1,7 @@
 package nick.game.ettt.ui.impl;
 
+import java.util.Map;
+
 import nick.game.ettt.ui.Block;
 import nick.game.ettt.ui.IUserInterface;
 
@@ -30,6 +32,11 @@ public class SimpleUserInterface extends IUserInterface {
 	@Override
 	public void clear() {
 		System.out.println("Cleared");
+	}
+
+	@Override
+	public Map getBlockMap() {
+		return null;
 	}
 
 }

@@ -17,7 +17,13 @@
 	
 	<bean id="ProcessingUnit" class="nick.game.ettt.core.ProcessingUnit" autowire="byType" >
 		<constructor-arg ref="MaterialUI" />
+		<property name="validator" ref="SimpleGameValidator"/>
 	</bean>
+	
+	<bean id="SimpleGameValidator" class="nick.game.ettt.core.SimpleGameValidator" >
+		<property name="blockMap" value="#{MaterialUI.blockMap }" />
+	</bean>
+	
 	
 	<bean id="GroovyConnector" class ="nick.game.ettt.GroovyConnector" />
 

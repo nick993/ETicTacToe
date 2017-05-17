@@ -12,11 +12,12 @@ import java.util.Optional;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import nick.game.ettt.core.IValidator;
 import nick.game.ettt.ui.Block;
 import nick.game.ettt.ui.IUserInterface;
 
 public class MaterialInterface extends IUserInterface {
-	private Map<Integer, Block> blockArray = new HashMap<Integer, Block>();
+	private Map<Integer, Block> blockMap = new HashMap<Integer, Block>();
 	private static int count = 0;
 	private int blockSize;
 	private String script;
@@ -53,7 +54,7 @@ public class MaterialInterface extends IUserInterface {
 	
 	private int changeButtonIcon(JButton button) {
 		Integer index = (Integer) button.getClientProperty("index");
-		if (blockArray.get(index) == Block.EMPTY) {
+		if (blockMap.get(index) == Block.EMPTY) {
 			ImageIcon icon = (count % 2 == 0) ? iconTick : iconCross;
 			Image img = icon.getImage();
 			Image newimg = img.getScaledInstance(300/blockSize, 300/blockSize,
@@ -61,7 +62,7 @@ public class MaterialInterface extends IUserInterface {
 			icon = new ImageIcon(newimg);
 			button.setIcon(icon);
 			count++;
-			blockArray.put(index, (count % 2 == 0) ? Block.PLAYER1
+			blockMap.put(index, (count % 2 == 0) ? Block.PLAYER1
 					: Block.PLAYER2);
 			System.out.println("Count Val : " + count);
 			return count%2 + 1;
@@ -78,7 +79,7 @@ public class MaterialInterface extends IUserInterface {
 		for (int rowIndex = 0; rowIndex < blockSize; rowIndex++) {
 			for (int colIndex = 0; colIndex < blockSize; colIndex++) {
 				buttons[rowIndex][colIndex] = createButton(rowIndex, colIndex);
-				blockArray.put(rowIndex*blockSize + colIndex, Block.EMPTY);
+				blockMap.put(rowIndex*blockSize + colIndex, Block.EMPTY);
 				add(buttons[rowIndex][colIndex]);
 			}
 		}
@@ -101,7 +102,7 @@ public class MaterialInterface extends IUserInterface {
 	}
 
 	public Block getButton(int x, int y) {
-		return blockArray.get(getIndFromXY(x, y));
+		return blockMap.get(getIndFromXY(x, y));
 	}
 
 	@Override
@@ -109,7 +110,7 @@ public class MaterialInterface extends IUserInterface {
 		System.out.println("Set Block From Material Interface at (" + x + ", "
 				+ y + ").");
 		int returnedPlayer = changeButtonIcon(buttons[x][y]);
-		blockArray.put(x*blockSize + y, returnedPlayer == 1 ? Block.PLAYER1 : Block.PLAYER2);
+		blockMap.put(x*blockSize + y, returnedPlayer == 1 ? Block.PLAYER1 : Block.PLAYER2);
 		repaint();
 		return 0;
 	}
@@ -118,7 +119,7 @@ public class MaterialInterface extends IUserInterface {
 	public Block getConfiguration(int x, int y) {
 		//System.out.println("Get Block from Material Interface at (" + x + ", "
 	//			+ y + ").");
-		return blockArray.get(x*blockSize + y);
+		return blockMap.get(x*blockSize + y);
 	}
 
 	public String getScript() {
@@ -136,7 +137,7 @@ public class MaterialInterface extends IUserInterface {
 
 	@Override
 	public boolean isGameFininshed() {
-		 return blockArray.values().stream().map(b -> (Block) b).anyMatch(b -> {
+		 return blockMap.values().stream().map(b -> (Block) b).anyMatch(b -> {
 			if(b == Block.EMPTY) return true;
 			else	return false;
 		});
@@ -147,8 +148,14 @@ public class MaterialInterface extends IUserInterface {
 		for(int i=0;i<blockSize; i++) {
 			for(int j=0;j<blockSize; j++) {
 				buttons[i][j].setIcon(null);
-				blockArray.put(i*blockSize + j, Block.EMPTY);
+				blockMap.put(i*blockSize + j, Block.EMPTY);
 			}
 		}
 	}
+	
+	@Override
+	public Map getBlockMap() {
+		return blockMap;
+	}
+
 }
