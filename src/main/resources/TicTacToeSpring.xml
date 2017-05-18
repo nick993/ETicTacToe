@@ -31,7 +31,7 @@
 	<bean id="SimpleUI" class="nick.game.ettt.ui.impl.SimpleUserInterface" />
 	<bean id="MaterialUI" class="nick.game.ettt.ui.impl.MaterialInterface" >
 		<constructor-arg>
-			<value>6</value>
+			<value>3</value>
 		</constructor-arg>
 	</bean>
 	

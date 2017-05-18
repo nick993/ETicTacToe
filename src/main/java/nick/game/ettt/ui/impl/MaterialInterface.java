@@ -148,6 +148,7 @@ public class MaterialInterface extends IUserInterface {
 	public void clear() {
 		for(int i=0;i<blockSize; i++) {
 			for(int j=0;j<blockSize; j++) {
+				buttons[i][j].setEnabled(true);
 				buttons[i][j].setIcon(null);
 				blockMap.put(i*blockSize + j, Block.EMPTY);
 			}

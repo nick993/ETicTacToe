@@ -157,7 +157,7 @@ public class SimpleGameValidator implements IValidator {
 	@Override
 	public List<Integer> getInvalidBlocks() {
 		// TODO Auto-generated method stub
-		return null;
+		return invalidBlocks;
 	}
 
 	public void setInvalidBlocks(List<Integer> invalidBlocks) {

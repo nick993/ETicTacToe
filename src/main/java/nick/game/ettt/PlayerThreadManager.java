@@ -1,7 +1,5 @@
 package nick.game.ettt;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 class PlayerThread extends Thread {
@@ -96,7 +94,7 @@ public class PlayerThreadManager {
 
 	public static void runGame() {
 		if (player1 == null || player2 == null) {
-			System.out.println("One player is not initialized");
+			System.out.println("One or more player is not initialized");
 		} else {
 			try {
 				semaphore.release();

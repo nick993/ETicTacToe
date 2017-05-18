@@ -6,6 +6,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
+       <exec.mainClass>nick.game.ettt.TicTacToe</exec.mainClass>
+       <!-- The sample code requires at least JDK 1.7. -->
+       <!-- The maven compiler plugin defaults to a lower version -->
+       <maven.compiler.source>1.8</maven.compiler.source>
+       <maven.compiler.target>1.8</maven.compiler.target>
 		<spring.version>4.3.8.RELEASE</spring.version>
 	</properties>
 	<build>
@@ -56,6 +61,12 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.25</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.tensorflow</groupId>
+			<artifactId>tensorflow</artifactId>
+			<version>1.1.0</version>
 		</dependency>
 
 	</dependencies>
