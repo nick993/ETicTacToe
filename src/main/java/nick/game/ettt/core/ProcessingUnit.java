@@ -22,6 +22,16 @@ public class ProcessingUnit {
 	public void setScript(String script) {
 		this.script = script;
 	}
+	
+	public int doActions() {
+		int result1 = machineInteraction();
+		if(result1 != 0) {
+			return result1;
+		}
+		int result2 = runScript();
+		return result2;
+		
+	}
 
 	public int machineInteraction() {
 		int blockSize = userInterface.getBlockSize();

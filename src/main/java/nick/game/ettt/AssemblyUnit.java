@@ -28,6 +28,12 @@ public class AssemblyUnit {
 		gameOver = (result == 1) ? true : false;
 		return result;
 	}
+	
+	public int doAction() {
+		
+		return processingUnit.doActions();
+		
+	}
 
 	public int doScriptActions() throws InterruptedException {
 		if (gameOver)

@@ -7,7 +7,7 @@
 
 	<properties>
        <exec.mainClass>nick.game.ettt.TicTacToe</exec.mainClass>
-       <!-- The sample code requires at least JDK 1.7. -->
+       <!-- The sample code requires at least JDK 1.8. -->
        <!-- The maven compiler plugin defaults to a lower version -->
        <maven.compiler.source>1.8</maven.compiler.source>
        <maven.compiler.target>1.8</maven.compiler.target>
@@ -67,6 +67,7 @@
 			<groupId>org.tensorflow</groupId>
 			<artifactId>tensorflow</artifactId>
 			<version>1.1.0</version>
+			<scope>compile</scope>
 		</dependency>
 
 	</dependencies>

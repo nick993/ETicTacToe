@@ -2,10 +2,9 @@ package nick.game.ettt;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
@@ -16,13 +15,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
-import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.tensorflow.Tensor;
 
 public class TicTacToe extends JFrame {
 

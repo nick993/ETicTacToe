@@ -1,8 +1,12 @@
 package nick.game.ettt;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
 
-class PlayerThread extends Thread {
+class PlayerThread implements Callable {
 
 	private Semaphore semaphore;
 	private String playerName;
@@ -17,8 +21,10 @@ class PlayerThread extends Thread {
 		this.assemblyUnit = assemblyUnit;
 	}
 
+	
 	@Override
-	public void run() {
+	public Object call() throws Exception {
+		int stop = 0;
 		while (true) {
 
 			try {
@@ -26,15 +32,12 @@ class PlayerThread extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			int stop = 0;
+			stop = 0;
 			switch (playerType) {
 			case SCRIPT:
 
 				try {
 					stop = assemblyUnit.doScriptActions();
-					if(stop == 1) {
-						assemblyUnit.markInvalidBlocks();
-					}
 					System.out.println("Script Player " + playerName + " Action");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -60,13 +63,14 @@ class PlayerThread extends Thread {
 				break;
 			}
 			if(stop == 1) {
+				assemblyUnit.markInvalidBlocks();
 				System.out.println("Game Over");
 				break;
 			}
 
 			semaphore.release();
 		}
-
+		return stop;
 	}
 }
 
@@ -101,8 +105,20 @@ public class PlayerThreadManager {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			player1.start();
-			player2.start();
+			ExecutorService es = Executors.newSingleThreadExecutor();
+			Future f1 = es.submit(()-> {
+				int val = 0;
+				while(true) {
+					val = assemblyUnit.doAction();
+					if(val == 1) {
+						assemblyUnit.markInvalidBlocks();
+						System.out.println("Game Over");
+						break;
+					}
+				}
+			});
+			
+			
 		}
 	}
 }
