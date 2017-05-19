@@ -15,7 +15,7 @@
 		<property name="input" ref="MachineInp" />
 	</bean>
 	
-	<bean id="ProcessingUnit" class="nick.game.ettt.core.ProcessingUnit" autowire="byType" >
+	<bean id="ProcessingUnit" class="nick.game.ettt.core.ProcessingUnit" autowire="byType" init-method="init">
 		<constructor-arg ref="MaterialUI" />
 		<property name="validator" ref="SimpleGameValidator"/>
 	</bean>
@@ -34,6 +34,11 @@
 			<value>3</value>
 		</constructor-arg>
 	</bean>
+	
+	<bean id="BinaryThreadManager" class="nick.game.ettt.ThreadManager">
+		<constructor-arg value="2"></constructor-arg>
+	</bean>
+	
 	
 	<bean id="MachineInp" class="nick.game.ettt.io.impl.MachineInput" />
 	<bean id="ScriptInp" class="nick.game.ettt.io.impl.ScriptInput" />

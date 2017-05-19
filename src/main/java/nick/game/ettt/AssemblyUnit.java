@@ -24,12 +24,12 @@ public class AssemblyUnit {
 	public int doMachineActions() throws InterruptedException {
 		if (gameOver)
 			return 1;
-		int result = processingUnit.machineInteraction();
+		int result = processingUnit.machineRandomInteraction();
 		gameOver = (result == 1) ? true : false;
 		return result;
 	}
 	
-	public int doAction() {
+	public int doAction() throws Exception {
 		
 		return processingUnit.doActions();
 		
@@ -57,6 +57,7 @@ public class AssemblyUnit {
 
 	public void clearBoard() {
 		userInterface.clear();
+		processingUnit.clear();
 		gameOver = false;
 	}
 

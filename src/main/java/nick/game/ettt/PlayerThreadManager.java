@@ -109,7 +109,11 @@ public class PlayerThreadManager {
 			Future f1 = es.submit(()-> {
 				int val = 0;
 				while(true) {
-					val = assemblyUnit.doAction();
+					try {
+						val = assemblyUnit.doAction();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					if(val == 1) {
 						assemblyUnit.markInvalidBlocks();
 						System.out.println("Game Over");

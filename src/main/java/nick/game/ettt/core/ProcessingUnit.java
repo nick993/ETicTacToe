@@ -2,6 +2,8 @@ package nick.game.ettt.core;
 
 import groovy.lang.Binding;
 import nick.game.ettt.GroovyConnector;
+import nick.game.ettt.IInteraction;
+import nick.game.ettt.ThreadManager;
 import nick.game.ettt.ui.Block;
 import nick.game.ettt.ui.IUserInterface;
 
@@ -10,9 +12,19 @@ public class ProcessingUnit {
 	private GroovyConnector groovyConnector;
 	private IUserInterface userInterface;
 	private IValidator validator;
-
+	private ThreadManager binaryThreadManager;
+	private IInteraction player1;
+	private IInteraction player2;
+	
+	
+	
 	public ProcessingUnit(IUserInterface userInterface) {
 		this.userInterface = userInterface;
+	}
+	
+	public void init() {
+		player1 = () -> runScript();
+		player2 = () -> machineRandomInteraction();
 	}
 
 	public String getScript() {
@@ -22,26 +34,40 @@ public class ProcessingUnit {
 	public void setScript(String script) {
 		this.script = script;
 	}
-	
-	public int doActions() {
-		int result1 = machineInteraction();
-		if(result1 != 0) {
-			return result1;
-		}
-		int result2 = runScript();
-		return result2;
-		
-	}
 
-	public int machineInteraction() {
+	public int doActions() throws Exception {
+	/*	binaryThreadManager.addThread(() -> {
+			return machineInteraction();
+		});
+		
+		binaryThreadManager.addThread(() -> {
+			return runScript();
+		});
+		
+		return binaryThreadManager.getResult();
+		*/
+		
+		
+		int val = player1.interaction();
+		if(val != 0)
+			return val;
+		
+		val = player2.interaction();
+		return val;
+
+	}
+	
+	
+
+	public int machineRandomInteraction() {
 		int blockSize = userInterface.getBlockSize();
 
 		while (true) {
 			int randX = (int) (Math.random() * blockSize);
 			int randY = (int) (Math.random() * blockSize);
-			
+
 			Block selectedBlock = userInterface.getConfiguration(randX, randY);
-			if(selectedBlock == Block.EMPTY) {
+			if (selectedBlock == Block.EMPTY) {
 				userInterface.setBlock(randX, randY, Block.PLAYER2);
 				break;
 			}
@@ -114,6 +140,18 @@ public class ProcessingUnit {
 
 	public void setValidator(IValidator validator) {
 		this.validator = validator;
+	}
+
+	public ThreadManager getBinaryThreadManager() {
+		return binaryThreadManager;
+	}
+
+	public void setBinaryThreadManager(ThreadManager binaryThreadManager) {
+		this.binaryThreadManager = binaryThreadManager;
+	}
+
+	public void clear() {
+		binaryThreadManager.clear();
 	}
 
 }
